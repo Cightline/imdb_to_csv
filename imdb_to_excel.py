@@ -102,5 +102,6 @@ class imdb_to_csv():
             
 
 c = imdb_to_csv()
-c.load_list("ml")
+print "Put the movie list in the same directory as this script"
+c.load_list(raw_input("Name of movie list: "))
 c.parse_and_lookup()
