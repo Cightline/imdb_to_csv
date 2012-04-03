@@ -28,7 +28,7 @@ class imdb_to_csv():
         #self.field_names = {"Drive","Year"}
 
         self.csv_obj = csv.writer(self.file_obj, dialect='excel', delimiter=' ')
-
+        self.wrote_headers = False
 
     def utf_8_encoder(unicode_csv_data):
         for line in unicode_csv_data:
@@ -59,6 +59,8 @@ class imdb_to_csv():
             
             
             if s:
+                s["drive"] = drive
+    
                 self.parse_stats(s)
                 
 
@@ -66,11 +68,17 @@ class imdb_to_csv():
 
 
     def parse_stats(self, stats):
+        # No real checking if headers are there, will fix.
+        
+        if not self.wrote_headers:
+            self.csv_obj.writerow(stats.keys())
+            self.wrote_headers = True
 
         utf_stats = []
 
         for v in stats.values():
             utf_stats.append(v.encode('utf-8'))
+            
 
         if stats:            
             self.csv_obj.writerow(utf_stats)
